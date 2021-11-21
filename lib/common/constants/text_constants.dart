@@ -1,6 +1,5 @@
-import 'package:dean_manager/common/constants/colors_constants.dart';
+import 'package:dean_manager/common/theme/app_theme.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 abstract class FontSizeConst {
   static const double m = 16;
@@ -9,25 +8,11 @@ abstract class FontSizeConst {
 }
 
 abstract class TextStylesConst {
-  static final m = GoogleFonts.alegreya(
-    fontSize: FontSizeConst.m,
-    color: ColorsConst.primary,
-    decoration: TextDecoration.none,
-  );
-  static final l = GoogleFonts.alegreya(
-    fontSize: FontSizeConst.l,
-    color: ColorsConst.primary,
-    decoration: TextDecoration.none,
-  );
-  static final s = GoogleFonts.alegreya(
-    fontSize: FontSizeConst.s,
-    color: ColorsConst.primary,
-    decoration: TextDecoration.none,
-  );
-  static final lBold = GoogleFonts.alegreya(
+  static final m = defaultFont.copyWith(fontSize: FontSizeConst.m);
+  static final l = defaultFont.copyWith(fontSize: FontSizeConst.l);
+  static final s = defaultFont.copyWith(fontSize: FontSizeConst.s);
+  static final lBold = defaultFont.copyWith(
     fontSize: FontSizeConst.m,
     fontWeight: FontWeight.w600,
-    color: ColorsConst.primary,
-    decoration: TextDecoration.none,
   );
 }

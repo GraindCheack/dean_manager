@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 final appTheme = ThemeData.light().copyWith(
   primaryColor: ColorsConst.primary,
-  appBarTheme: const AppBarTheme(backgroundColor: ColorsConst.accentLight),
-  textTheme: GoogleFonts.alegreyaTextTheme().copyWith(
+  appBarTheme: const AppBarTheme(backgroundColor: ColorsConst.lightAccent),
+  textTheme: GoogleFonts.mPlus1pTextTheme().copyWith(
     headline1: TextStylesConst.lBold,
     headline2: TextStylesConst.lBold,
     headline3: TextStylesConst.l,
@@ -22,3 +22,5 @@ final appTheme = ThemeData.light().copyWith(
     overline: TextStylesConst.s,
   ),
 );
+
+final defaultFont = GoogleFonts.mPlus1p();

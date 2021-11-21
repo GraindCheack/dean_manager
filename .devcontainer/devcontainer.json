@@ -1,0 +1,12 @@
+{
+  "name": "flutter_docker",
+  "context": "..",
+  "dockerFile": "../Dockerfile",
+  "remoteUser": "developer",
+  "settings": {
+    "terminal.integrated.shell.linux": null
+  },
+  "runArgs": ["--privileged"],
+  "extensions": ["dart-code.flutter"],
+  "workspaceFolder": "/home/developer/workspace"
+}

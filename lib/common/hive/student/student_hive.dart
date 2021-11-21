@@ -16,15 +16,15 @@ class StudentHive extends HiveObject implements UserInterface {
 
   @override
   @HiveField(0)
-  final String firstName;
+  String firstName;
 
   @override
   @HiveField(1)
-  final String lastName;
+  String lastName;
 
   @override
   @HiveField(2)
-  final String middleName;
+  String middleName;
 
   @HiveField(3)
   GroupHive group;

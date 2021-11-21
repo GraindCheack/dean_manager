@@ -9,9 +9,9 @@ class DbService extends GetxService {
   late final Box<TeacherHive> _teachersBox;
   late final Box<GroupHive> _groupsBox;
 
-  late final List<StudentHive> students;
-  late final List<TeacherHive> teachers;
-  late final List<GroupHive> groups;
+  List<StudentHive> get students => _studentsBox.values.toList();
+  List<TeacherHive> get teachers => _teachersBox.values.toList();
+  List<GroupHive> get groups => _groupsBox.values.toList();
 
   Future<DbService> init() async {
     await Hive.initFlutter();
@@ -24,10 +24,18 @@ class DbService extends GetxService {
     _teachersBox = await Hive.openBox<TeacherHive>('teachers');
     _groupsBox = await Hive.openBox<GroupHive>('groups');
 
-    students = HiveList(_studentsBox);
-    teachers = HiveList(_teachersBox);
-    groups = HiveList(_groupsBox);
-
     return this;
+  }
+
+  void addGroup(GroupHive group) {
+    _groupsBox.add(group);
+  }
+
+  void addStudent(StudentHive student) {
+    _studentsBox.add(student);
+  }
+
+  void addTeacher(TeacherHive teacher) {
+    _teachersBox.add(teacher);
   }
 }

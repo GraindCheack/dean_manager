@@ -11,17 +11,17 @@ class DeanOffset extends StatelessWidget {
     this.height = OffsetConst.m,
   }) : super(key: key);
 
-  const DeanOffset.vertical({
-    Key? key,
+  const DeanOffset.vertical([
     this.height = OffsetConst.m,
     this.width = 0,
-  }) : super(key: key);
-
-  const DeanOffset.horizontal({
     Key? key,
-    this.height = 0,
+  ]) : super(key: key);
+
+  const DeanOffset.horizontal([
     this.width = OffsetConst.m,
-  }) : super(key: key);
+    this.height = 0,
+    key,
+  ]) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

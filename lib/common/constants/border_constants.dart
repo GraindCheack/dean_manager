@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-abstract class BorderConst {
+abstract class BorderRadiusConst {
   static const m = BorderRadius.all(Radius.circular(10));
   static const l = BorderRadius.all(Radius.circular(14));
   static const s = BorderRadius.all(Radius.circular(6));

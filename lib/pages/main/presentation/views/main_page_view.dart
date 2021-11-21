@@ -11,10 +11,10 @@ import 'package:get/get.dart';
 
 class MainView extends GetView<MainController> {
   const MainView({Key? key}) : super(key: key);
-  static const _gridItems = [
-    Expanded(child: MainGroupsView()),
-    Expanded(child: MainTeachersView()),
-    Expanded(child: MainStudentsView()),
+  static const _gridItems = <Widget>[
+    MainGroupsView(),
+    MainTeachersView(),
+    MainStudentsView(),
   ];
 
   @override
