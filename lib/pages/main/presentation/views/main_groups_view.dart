@@ -51,11 +51,10 @@ class MainGroupsView extends GetView<MainGroupsController> {
                         onEdit: (group) {
                           if (group != null) {
                             Get.defaultDialog(
-                              title: 'Edit student',
+                              title: 'Edit group',
                               content: GroupForm(
                                 group: e,
-                                onSubmit: (group) =>
-                                    controller.editBtnHandler(e, group),
+                                onSubmit: (group) => controller.editBtnHandler(e, group),
                               ),
                             );
                           }

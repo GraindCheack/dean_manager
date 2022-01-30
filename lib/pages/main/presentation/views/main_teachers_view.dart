@@ -55,11 +55,10 @@ class MainTeachersView extends GetView<MainTeachersController> {
                         onEdit: (group) {
                           if (group != null) {
                             Get.defaultDialog(
-                              title: 'Edit student',
+                              title: 'Edit teacher',
                               content: TeacherForm(
                                 teacher: e,
-                                onSubmit: (group) =>
-                                    controller.editBtnHandler(e, group),
+                                onSubmit: (group) => controller.editBtnHandler(e, group),
                               ),
                             );
                           }
