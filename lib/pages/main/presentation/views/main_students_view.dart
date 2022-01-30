@@ -1,13 +1,7 @@
-import 'package:dean_manager/common/constants/size_constants.dart';
 import 'package:dean_manager/common/hive/student/student_hive.dart';
-import 'package:dean_manager/common/hive/teacher/teacher_hive.dart';
-import 'package:dean_manager/common/presentation/custom_button/custom_button.dart';
 import 'package:dean_manager/common/presentation/custom_search/custom_input.dart';
-import 'package:dean_manager/common/presentation/list_card/list_card_view.dart';
 import 'package:dean_manager/common/presentation/offset/offset.dart';
 import 'package:dean_manager/common/presentation/student_form/student_form.dart';
-import 'package:dean_manager/common/presentation/teachers_form/teachers_form.dart';
-import 'package:dean_manager/common/services/db_service.dart';
 import 'package:dean_manager/pages/main/presentation/controllers/main_students_controller.dart';
 import 'package:dean_manager/pages/main/presentation/views/common/main_filter_actions.dart';
 import 'package:dean_manager/pages/main/presentation/views/common/main_list_card.dart';

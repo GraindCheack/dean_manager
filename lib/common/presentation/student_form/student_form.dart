@@ -100,6 +100,7 @@ class StudentForm extends StatelessWidget {
       form.control('lastName').setErrors({'Student already exist': true});
       return;
     }
+
     onSubmit(newStudent);
   }
 }

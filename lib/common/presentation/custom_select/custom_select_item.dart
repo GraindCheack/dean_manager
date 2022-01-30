@@ -8,4 +8,12 @@ class CustomSelectItem<T> {
   bool selected;
   final String name;
   final T object;
+
+  CustomSelectItem<T> copyWith({bool? selected}) {
+    return CustomSelectItem<T>(
+      name: name,
+      object: object,
+      selected: selected ?? false,
+    );
+  }
 }

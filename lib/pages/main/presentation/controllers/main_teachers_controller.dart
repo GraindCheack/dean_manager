@@ -1,4 +1,6 @@
 import 'package:dean_manager/common/constants/common_constants.dart';
+import 'package:dean_manager/common/hive/group/group_hive.dart';
+import 'package:dean_manager/common/hive/student/student_hive.dart';
 import 'package:dean_manager/common/hive/teacher/teacher_hive.dart';
 import 'package:dean_manager/common/presentation/teachers_form/teachers_form.dart';
 import 'package:dean_manager/common/services/db_service.dart';
@@ -25,30 +27,34 @@ class MainTeachersController extends GetxController
 
   @override
   void onInit() {
-    updateTeachers();
+    mainController.updateTeachers();
     subscribe();
     super.onInit();
   }
 
   void subscribe() {
-    mainController.selected.stream.listen((_) {
+    mainController.teachers.listen(
+      (teachers) => list(
+        filterTeachers(teachers, mainController.selected.value),
+      ),
+    );
+    mainController.selected.stream.listen((value) {
       selected = null;
-      if (mainController.selected.value is TeacherHive) {
-        selected = mainController.selected.value;
+      if (value is TeacherHive) {
+        selected = value;
       }
-      updateTeachers();
     });
     filter.stream
         .debounceTime(const Duration(milliseconds: debounceTime))
-        .listen((_) => updateTeachers());
+        .listen((_) => mainController.updateTeachers());
   }
 
-  void selectTeacher(TeacherHive teacher) {
-    mainController.selected(teacher);
-  }
-
-  void updateTeachers() async {
-    list(await mainController.getTeachers(filter: filter.string));
+  void selectTeacher(TeacherHive? teacher) {
+    if (teacher != null && teacher != selected) {
+      mainController.selected(teacher);
+      return;
+    }
+    mainController.selected('');
   }
 
   void editBtnHandler(TeacherHive teacher, TeacherHive newTeacher) {
@@ -58,22 +64,41 @@ class MainTeachersController extends GetxController
     teacher.middleName = newTeacher.middleName;
     teacher.groups = newTeacher.groups;
     teacher.save();
-    updateTeachers();
+    mainController.updateTeachers();
   }
 
   void onGroupDelete(TeacherHive group) {
     group.delete();
-    updateTeachers();
+    mainController.updateAll();
   }
 
   void formSubmitHandler(TeacherHive teacher) {
     Get.close(0);
     Get.find<DbService>().addTeacher(teacher);
-    updateTeachers();
+    mainController.updateTeachers();
+  }
+
+  List<TeacherHive> filterTeachers(
+      List<TeacherHive> teachers, dynamic selected) {
+    if (selected is GroupHive) {
+      teachers = teachers.where((e) => e.groups.contains(selected)).toList();
+    }
+
+    if (selected is StudentHive) {
+      teachers =
+          teachers.where((e) => e.groups.contains(selected.group)).toList();
+    }
+
+    teachers = teachers.where((e) => e.fullName.contains(filter)).toList();
+
+    return teachers;
   }
 
   @override
   void clearFilters() {
+    if (selected != null) {
+      selectTeacher(null);
+    }
     filter('');
     filterController.value = const TextEditingValue(text: '');
   }

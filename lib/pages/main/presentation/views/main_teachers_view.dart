@@ -46,7 +46,12 @@ class MainTeachersView extends GetView<MainTeachersController> {
                       MainListCard<TeacherHive>(
                         e.shortName,
                         object: e,
-                        onPressed: (v) {},
+                        selected: controller.selected?.fullName == e.fullName,
+                        onPressed: (teacher) {
+                          if (teacher != null) {
+                            controller.selectTeacher(teacher);
+                          }
+                        },
                         onEdit: (group) {
                           if (group != null) {
                             Get.defaultDialog(

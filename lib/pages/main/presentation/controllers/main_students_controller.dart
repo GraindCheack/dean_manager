@@ -1,6 +1,7 @@
 import 'package:dean_manager/common/constants/common_constants.dart';
 import 'package:dean_manager/common/hive/group/group_hive.dart';
 import 'package:dean_manager/common/hive/student/student_hive.dart';
+import 'package:dean_manager/common/hive/teacher/teacher_hive.dart';
 import 'package:dean_manager/common/presentation/group_form/group_form.dart';
 import 'package:dean_manager/common/presentation/student_form/student_form.dart';
 import 'package:dean_manager/common/services/db_service.dart';
@@ -28,30 +29,34 @@ class MainStudentsController extends GetxController
 
   @override
   void onInit() {
-    updateStudents();
+    mainController.updateStudents();
     subscribe();
     super.onInit();
   }
 
   void subscribe() {
-    mainController.selected.stream.listen((_) {
+    mainController.students.listen(
+      (students) => list(
+        filterStudents(students, mainController.selected.value),
+      ),
+    );
+    mainController.selected.stream.listen((value) {
       selected = null;
-      if (mainController.selected.value is StudentHive) {
-        selected = mainController.selected.value;
+      if (value is StudentHive) {
+        selected = value;
       }
-      updateStudents();
     });
     filter.stream
         .debounceTime(const Duration(milliseconds: debounceTime))
-        .listen((_) => updateStudents());
+        .listen((_) => mainController.updateStudents());
   }
 
   void selectStudent(StudentHive? student) {
-    mainController.selected(student ?? '');
-  }
-
-  void updateStudents() async {
-    list(await mainController.getStudents(filter: filter.string));
+    if (student != null && student != selected) {
+      mainController.selected(student);
+      return;
+    }
+    mainController.selected('');
   }
 
   void editBtnHandler(StudentHive student, StudentHive newStudent) {
@@ -61,18 +66,44 @@ class MainStudentsController extends GetxController
     student.middleName = newStudent.middleName;
     student.group = newStudent.group;
     student.save();
-    updateStudents();
+    mainController.updateStudents();
   }
 
   void onGroupDelete(StudentHive group) {
     group.delete();
-    updateStudents();
+    mainController.updateAll();
   }
 
   void formSubmitHandler(StudentHive student) {
     Get.close(0);
     Get.find<DbService>().addStudent(student);
-    updateStudents();
+    mainController.updateStudents();
+  }
+
+  List<StudentHive> filterStudents(
+      List<StudentHive> students, dynamic selected) {
+    if (selected is GroupHive) {
+      final selectedGroup = selected;
+      students = students
+          .where(
+            (e) => e.group.name == selectedGroup.name,
+          )
+          .toList();
+    }
+
+    if (selected is TeacherHive) {
+      final selectedTeacher = selected;
+      students = students
+          .where(
+            (e) => selectedTeacher.groups
+                .any((group) => group.name == e.group.name),
+          )
+          .toList();
+    }
+
+    students = students.where((e) => e.fullName.contains(filter)).toList();
+
+    return students;
   }
 
   @override
